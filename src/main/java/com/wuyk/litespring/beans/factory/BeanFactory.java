@@ -7,7 +7,19 @@ import com.wuyk.litespring.beans.BeanDefinition;
  */
 public interface BeanFactory {
 
+    /**
+     * 获取bean的定义
+     *
+     * @param beanID
+     * @return
+     */
     BeanDefinition getBeanDefintion(String beanID);
 
+    /**
+     * 获取bean的实例
+     *
+     * @param beanID
+     * @return
+     */
     Object getBean(String beanID);
 }

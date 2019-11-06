@@ -1,9 +1,11 @@
-package com.wuyk.litespring.beans.factory.support;
+package com.litespring.beans.factory.support;
 
 
-import com.wuyk.litespring.beans.BeanDefinition;
-import com.wuyk.litespring.beans.factory.BeanFactory;
-import com.wuyk.litespring.util.ClassUtils;
+import com.litespring.beans.BeanDefinition;
+import com.litespring.beans.factory.BeanCreationException;
+import com.litespring.beans.factory.BeanDefinitionStoreException;
+import com.litespring.beans.factory.BeanFactory;
+import com.litespring.util.ClassUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -31,7 +33,6 @@ public class DefaultBeanFactory implements BeanFactory {
         try {
             //通过ClassUtils拿到classLoader 通过classLoader把配置文件变成输入流
             ClassLoader cl = ClassUtils.getDefaultClassLoader();
-            System.out.println(ClassUtils.getDefaultClassLoader());
             is = cl.getResourceAsStream(configFile);
             SAXReader reader = new SAXReader();
             Document doc = reader.read(is);
@@ -47,8 +48,8 @@ public class DefaultBeanFactory implements BeanFactory {
                 this.beanDefinitionMap.put(id, bd);
             }
         } catch (DocumentException e) {
-            e.printStackTrace();
-        }finally {
+            throw new BeanDefinitionStoreException("IOException parsing XML document", e);
+        } finally {
             if (is != null) {
                 try {
                     is.close();
@@ -69,7 +70,7 @@ public class DefaultBeanFactory implements BeanFactory {
     public Object getBean(String beanID) {
         BeanDefinition bd = this.getBeanDefintion(beanID);
         if (bd == null) {
-            return null;
+            throw new BeanCreationException("Bean Definition does not exist");
         }
         ClassLoader cl = ClassUtils.getDefaultClassLoader();
         String beanClassName = bd.getBeanClassName();
@@ -77,13 +78,8 @@ public class DefaultBeanFactory implements BeanFactory {
             //假定bean的类有无参构造函数，通过loadClass、反射的方式获得实例
             Class<?> clz = cl.loadClass(beanClassName);
             return clz.newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new BeanCreationException("Bean Definition does not exist");
         }
-        return null;
     }
 }

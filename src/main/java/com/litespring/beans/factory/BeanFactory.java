@@ -1,6 +1,6 @@
-package com.wuyk.litespring.beans.factory;
+package com.litespring.beans.factory;
 
-import com.wuyk.litespring.beans.BeanDefinition;
+import com.litespring.beans.BeanDefinition;
 
 /**
  * Created by WUYK on 2019-08-22.

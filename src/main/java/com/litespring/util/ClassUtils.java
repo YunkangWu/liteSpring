@@ -1,4 +1,4 @@
-package com.wuyk.litespring.util;
+package com.litespring.util;
 
 /**
  * Created by WUYK on 2019-11-06.

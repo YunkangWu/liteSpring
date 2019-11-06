@@ -5,7 +5,10 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="petStore"
-          class="com.wuyk.litespring.service.v1.PetStoreService" >
+          class="com.litespring.service.v1.PetStoreService" >
+    </bean>
+    <bean id="invalidBean"
+          class="com.xxx" >
     </bean>
 </beans>
 

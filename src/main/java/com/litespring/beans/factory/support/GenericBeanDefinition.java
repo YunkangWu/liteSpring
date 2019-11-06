@@ -3,9 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.wuyk.litespring.beans.factory.support;
+package com.litespring.beans.factory.support;
 
-import com.wuyk.litespring.beans.BeanDefinition;
+import com.litespring.beans.BeanDefinition;
 
 public class GenericBeanDefinition implements BeanDefinition {
 

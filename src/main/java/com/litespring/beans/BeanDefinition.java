@@ -1,4 +1,4 @@
-package com.wuyk.litespring.beans;
+package com.litespring.beans;
 
 /**
  * Created by WUYK on 2019-08-22.

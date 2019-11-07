@@ -13,7 +13,7 @@ public interface BeanFactory {
      * @param beanID
      * @return
      */
-    BeanDefinition getBeanDefintion(String beanID);
+    BeanDefinition getBeanDefinition(String beanID);
 
     /**
      * 获取bean的实例

@@ -3,8 +3,8 @@ package com.litespring.test.v1;
 import com.litespring.beans.BeanDefinition;
 import com.litespring.beans.factory.BeanCreationException;
 import com.litespring.beans.factory.BeanDefinitionStoreException;
-import com.litespring.beans.factory.BeanFactory;
 import com.litespring.beans.factory.support.DefaultBeanFactory;
+import com.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.litespring.service.v1.PetStoreService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,10 +20,11 @@ public class BeanFactoryTest {
     @Test
     public void testGetBean() {
         //BeanFactory为接口，new一个实例出来
-        BeanFactory factory = new DefaultBeanFactory("petstore-v1.xml");
+        DefaultBeanFactory factory = new DefaultBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 
         //获取xml中petStore的bean
-        BeanDefinition bd = factory.getBeanDefintion("petStore");
+        BeanDefinition bd = factory.getBeanDefinition("petStore");
 
         //判断
         assertEquals("com.litespring.service.v1.PetStoreService", bd.getBeanClassName());
@@ -35,7 +36,9 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean() {
-        BeanFactory factory = new DefaultBeanFactory("petstore-v1.xml");
+        DefaultBeanFactory factory = new DefaultBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+        reader.loadBeanDefinition("petstore-v1.xml");
         try {
             factory.getBean("invalidBean");
         } catch (BeanCreationException e) {
@@ -48,7 +51,9 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXml() {
         try {
-            new DefaultBeanFactory("xxx.xml");
+            DefaultBeanFactory factory = new DefaultBeanFactory();
+            XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+            reader.loadBeanDefinition("xxx.xml");
         } catch (BeanDefinitionStoreException e) {
             //测试成功应该在这里抛出异常
             return;
